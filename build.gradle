@@ -51,7 +51,7 @@ dependencies {
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 	// Spring Cloud OpenFeign 의존성
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
