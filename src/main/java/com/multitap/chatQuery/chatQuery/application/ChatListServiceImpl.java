@@ -28,8 +28,6 @@ public class ChatListServiceImpl implements ChatListService {
                 .map(ChatListResponseDto::from)
                 .toList();
 
-//        return ChatListResponseDto.from(allByMemberUuidSorted);
     }
-
 
 }

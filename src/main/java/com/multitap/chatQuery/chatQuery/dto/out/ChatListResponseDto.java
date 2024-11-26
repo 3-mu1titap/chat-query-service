@@ -38,4 +38,5 @@ public class ChatListResponseDto {
                 .mentoringRequestDto(mentoringRequestDto)
                 .build();
     }
+
 }

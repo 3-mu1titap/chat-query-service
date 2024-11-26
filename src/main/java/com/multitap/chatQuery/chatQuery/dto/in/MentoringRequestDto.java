@@ -1,7 +1,6 @@
 package com.multitap.chatQuery.chatQuery.dto.in;
 
 import com.multitap.chatQuery.chatQuery.entity.ChatList;
-import com.multitap.chatQuery.chatQuery.feignClient.dto.MentoringDto;
 import com.multitap.chatQuery.chatQuery.feignClient.dto.SessionRoomResponseDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,4 +48,5 @@ public class MentoringRequestDto {
                 .mentoringInfo(mentoringRequestDto)
                 .build();
     }
+
 }
