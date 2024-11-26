@@ -5,6 +5,7 @@ import com.multitap.chatQuery.chatQuery.dto.out.ChatListResponseDto;
 import com.multitap.chatQuery.chatQuery.feignClient.MentoringServiceFeignClient;
 import com.multitap.chatQuery.chatQuery.vo.out.ChatListResponseVo;
 import com.multitap.chatQuery.common.response.BaseResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,7 @@ import java.util.List;
 public class ChatQueryController {
 
     private final ChatListService chatListService;
-    private final MentoringServiceFeignClient mentoringServiceFeignClient;
-
+    @Operation(summary = "채팅방 리스트 조회", description = "특정 유저의 채팅방 리스트를 조회합니다.")
     @GetMapping
     public BaseResponse<List<ChatListResponseVo>> getMemberInfo(@RequestHeader("userUuid") String uuid) {
         return new BaseResponse<>(chatListService.getChatList(uuid).stream()
