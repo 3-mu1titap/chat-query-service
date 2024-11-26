@@ -28,9 +28,6 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
         // 1. mentoringSessionUuid로 기존 데이터 조회
         Optional<ChatList> existingChat = chatListRepository.findById(mentoringSessionUuid);
 
-//        SessionRoomResponseDto sessionRoom = mentoringServiceFeignClient.getSessionRoom(mentoringSessionUuid);
-//        MentoringRequestDto mentoringRequestDto = MentoringRequestDto.from(sessionRoom);
-
         // 2. 새 엔티티 생성 (기존 데이터가 있으면 ID 유지)
         ChatList chatList = existingChat
                 .map(chat -> ChatList.builder()

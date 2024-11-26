@@ -16,4 +16,5 @@ public class ChatList {
     private String id;
     private ChatRequestDto chatInfo;
     private MentoringRequestDto mentoringInfo;
+
 }
