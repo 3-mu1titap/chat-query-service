@@ -22,9 +22,10 @@ import java.util.List;
 public class ChatQueryController {
 
     private final ChatListService chatListService;
+
     @Operation(summary = "채팅방 리스트 조회", description = "특정 유저의 채팅방 리스트를 조회합니다.")
     @GetMapping
-    public BaseResponse<List<ChatListResponseVo>> getMemberInfo(@RequestHeader("userUuid") String uuid) {
+    public BaseResponse<List<ChatListResponseVo>> getChatListByMember(@RequestHeader("userUuid") String uuid) {
         return new BaseResponse<>(chatListService.getChatList(uuid).stream()
                 .map(ChatListResponseDto::toVo)
                 .toList());
