@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface MentoringServiceFeignClient {
 
     // mentoring-query-service 의 세션 조회 api 호출
-    @GetMapping("api/v1/mentoring-query-service/session-room/{sessionUuid}")
+    @GetMapping("/api/v1/mentoring-query-service/session-room/{sessionUuid}")
     SessionRoomResponseDto findSessionRoomBySessionUuid(@PathVariable(name = "sessionUuid") String sessionUuid);
 
 
