@@ -17,7 +17,7 @@ class MentoringServiceFeignClientTest {
     @Test
     void feignCall(){
         String uuid = "ecce4ae5-bc59-45dd-90a9-e529a0964096";
-        SessionRoomResponseDto sessionTime = feignClient.getSessionRoom(uuid);
+        SessionRoomResponseDto sessionTime = feignClient.findSessionRoomBySessionUuid(uuid);
         System.out.println(sessionTime);
         //SessionRoomResponseDto getSessionTime(@PathVariable(name = "uuid") String uuid);
     }

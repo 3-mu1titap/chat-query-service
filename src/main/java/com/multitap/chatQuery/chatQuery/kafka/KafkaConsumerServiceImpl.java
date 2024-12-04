@@ -39,7 +39,7 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
                         .mentoringInfo(chat.getMentoringInfo()) // 필요시 기존 데이터 유지
                         .build())
                 .orElseGet(() -> {
-                    MentoringRequestDto mentoringRequestDto = MentoringRequestDto.from(mentoringServiceFeignClient.getSessionRoom(mentoringSessionUuid));
+                    MentoringRequestDto mentoringRequestDto = MentoringRequestDto.from(mentoringServiceFeignClient.findSessionRoomBySessionUuid(mentoringSessionUuid));
                     log.info("{}", mentoringRequestDto);
                     return chatRequestDto.toEntity(chatRequestDto, mentoringRequestDto, mentoringSessionUuid); // 없으면 새로 생성
                         });
