@@ -41,5 +41,6 @@ public class SwaggerConfig {
                 .title("CHAT QUERY SERVICE")
                 .description("CHAT QUERY SERVICE Swagger UI")
                 .version("1.0.0");
+        //
     }
 }
