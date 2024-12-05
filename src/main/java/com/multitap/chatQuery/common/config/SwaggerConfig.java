@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-    @Value("${swagger.uri}")
-    private String swaggerUri;
+//    @Value("${swagger.uri}")
+//    private String swaggerUri;
 
     private static final String BEARER_TOKEN_PREFIX = "Bearer";
 
@@ -32,7 +32,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .addSecurityItem(securityRequirement)
                 .components(components)
-                .addServersItem(new Server().url(swaggerUri))
+                .addServersItem(new Server().url("/chat-query-service"))
                 .info(apiInfo());
     }
 
