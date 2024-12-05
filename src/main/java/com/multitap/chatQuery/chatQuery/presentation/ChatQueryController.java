@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/chatList")
+@RequestMapping("/api/v1/chat-query-service")
 public class ChatQueryController {
 
     private final ChatListService chatListService;
