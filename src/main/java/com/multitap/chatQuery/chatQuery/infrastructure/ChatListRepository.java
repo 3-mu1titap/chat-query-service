@@ -15,4 +15,6 @@ public interface ChatListRepository extends MongoRepository<ChatList, String> {
 
     @Query(value = "{ 'chatInfo.memberUuid': ?0 }", sort = "{ 'chatInfo.sentAt': -1 }")
     List<ChatList> findAllByMemberUuidSorted(String memberUuid);
+
+    boolean existsById(String mentoringSessionUuid);
 }

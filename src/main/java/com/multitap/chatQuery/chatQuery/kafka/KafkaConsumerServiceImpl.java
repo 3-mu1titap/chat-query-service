@@ -1,6 +1,7 @@
 package com.multitap.chatQuery.chatQuery.kafka;
 
 import com.multitap.chatQuery.chatQuery.dto.in.ChatRequestDto;
+import com.multitap.chatQuery.chatQuery.dto.in.MemberRequestDto;
 import com.multitap.chatQuery.chatQuery.dto.in.MentoringRequestDto;
 import com.multitap.chatQuery.chatQuery.entity.ChatList;
 import com.multitap.chatQuery.chatQuery.feignClient.MentoringServiceFeignClient;
@@ -49,5 +50,14 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
         chatListRepository.save(chatList);
         log.info("{} 채팅 성공: {}", existingChat.isPresent() ? "채팅 업데이트" : "채팅 저장", chatRequestDto.getMessage());
     }
+
+    @Override
+    public void addMemberList(MemberRequestDto memberRequestDto, String mentoringSessionUuid) {
+        if (chatListRepository.existsById(mentoringSessionUuid)){ // 채팅방에
+
+        }
+
+    }
+
 
 }
