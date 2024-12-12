@@ -13,6 +13,8 @@ public interface ChatListRepository extends MongoRepository<ChatList, String> {
 
     Optional<ChatList> findById(String id);
 
-    @Query(value = "{ 'chatInfo.memberUuid': ?0 }", sort = "{ 'chatInfo.sentAt': -1 }")
-    List<ChatList> findAllByMemberUuidSorted(String memberUuid);
+    @Query(value = "{ 'memberInfo.chatMemberUuid': ?0 }", sort = "{ 'chatInfo.sentAt': -1 }")
+    List<ChatList> findAllByChatMemberUuidSorted(String memberUuid);
+
+    boolean existsById(String mentoringSessionUuid);
 }

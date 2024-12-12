@@ -18,7 +18,7 @@ public class ChatListServiceImpl implements ChatListService {
 
     @Override
     public List<ChatListResponseDto> getChatList(String memberUuid) {
-        List<ChatList> allByMemberUuidSorted = chatListRepository.findAllByMemberUuidSorted(memberUuid);
+        List<ChatList> allByMemberUuidSorted = chatListRepository.findAllByChatMemberUuidSorted(memberUuid);
 
         if (allByMemberUuidSorted.isEmpty()) {
             throw new BaseException(BaseResponseStatus.NO_CHAT_LIST);
