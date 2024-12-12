@@ -13,5 +13,4 @@ public interface MentoringServiceFeignClient {
     @GetMapping("/api/v1/mentoring-query-service/session-room/{sessionUuid}")
     SessionRoomResponseDto findSessionRoomBySessionUuid(@PathVariable(name = "sessionUuid") String sessionUuid);
 
-
 }
