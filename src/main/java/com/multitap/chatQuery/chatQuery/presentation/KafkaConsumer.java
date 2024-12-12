@@ -23,11 +23,10 @@ public class KafkaConsumer {
         kafkaConsumerService.addChat(ChatRequestDto.from(chatDto), chatDto.getMentoringSessionUuid());
     }
 
-    @KafkaListener(topics = "chat-member-topic", groupId = "chat-consumer-group", )
+    @KafkaListener(topics = "chat-member-topic", groupId = "chat-consumer-group",containerFactory = "memberDtoListener" )
     public void processChatMember(MemberDto memberDto){
         log.info("Received chat request member: {}", memberDto);
         kafkaConsumerService.addMemberList(MemberRequestDto.from(memberDto),memberDto.getMentoringSessionUuid());
     }
-
 
 }

@@ -10,9 +10,14 @@ import com.multitap.chatQuery.chatQuery.infrastructure.ChatListRepository;
 import com.multitap.chatQuery.common.exception.BaseException;
 import com.multitap.chatQuery.common.response.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.query.Criteria;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +27,7 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
 
     private final ChatListRepository chatListRepository;
     private final MentoringServiceFeignClient mentoringServiceFeignClient;
+    private final MongoTemplate mongoTemplate;
 
     @Override
     public void addChat(ChatRequestDto chatRequestDto, String mentoringSessionUuid) {
@@ -44,7 +50,7 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
                     MentoringRequestDto mentoringRequestDto = MentoringRequestDto.from(mentoringServiceFeignClient.findSessionRoomBySessionUuid(mentoringSessionUuid));
                     log.info("{}", mentoringRequestDto);
                     return chatRequestDto.toEntity(chatRequestDto, mentoringRequestDto, mentoringSessionUuid); // 없으면 새로 생성
-                        });
+                });
 
         // 3. 저장 (기존 ID면 업데이트, 없으면 새로 저장)
         chatListRepository.save(chatList);
@@ -53,11 +59,14 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
 
     @Override
     public void addMemberList(MemberRequestDto memberRequestDto, String mentoringSessionUuid) {
-        if (chatListRepository.existsById(mentoringSessionUuid)){ // 채팅방에
 
-        }
+        Query query = new Query(Criteria.where("_id").is(mentoringSessionUuid));
 
+        Update update = new Update()
+                .addToSet("memberInfo", memberRequestDto)
+                .setOnInsert("mentoringInfo", MentoringRequestDto.from(
+                        mentoringServiceFeignClient.findSessionRoomBySessionUuid(mentoringSessionUuid)));
+
+        mongoTemplate.upsert(query, update, ChatList.class);
     }
-
-
 }
