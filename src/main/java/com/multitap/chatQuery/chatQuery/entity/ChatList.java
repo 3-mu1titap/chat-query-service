@@ -20,4 +20,5 @@ public class ChatList {
     private ChatRequestDto chatInfo;
     private MentoringRequestDto mentoringInfo;
     private List<MemberRequestDto> memberInfo;
+
 }
