@@ -33,28 +33,21 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
     public void addChat(ChatRequestDto chatRequestDto, String mentoringSessionUuid) {
 
         // 1. mentoringSessionUuid로 기존 데이터 조회
-        Optional<ChatList> existingChat = chatListRepository.findById(mentoringSessionUuid);
+        ChatList existingChat = chatListRepository.findById(mentoringSessionUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_CHAT_LIST)); // 반드시 데이터가 존재한다고 가정
 
-//        SessionRoomResponseDto sessionRoom = mentoringServiceFeignClient.getSessionRoom(mentoringSessionUuid);
-//        MentoringRequestDto mentoringRequestDto = MentoringRequestDto.from(sessionRoom);
+        // 2. 기존 데이터를 업데이트
+        ChatList updatedChatList = ChatList.builder()
+                .id(existingChat.getId()) // 기존 ID 유지
+                .chatInfo(chatRequestDto) // 새로운 ChatInfo로 대체
+                .mentoringInfo(existingChat.getMentoringInfo()) // 기존 MentoringInfo 유지
+                .memberInfo(existingChat.getMemberInfo()) // 기존 MemberInfo 유지
+                .build();
 
-        // 2. 새 엔티티 생성 (기존 데이터가 있으면 ID 유지)
-        ChatList chatList = existingChat
-                .map(chat -> ChatList.builder()
-                        .id(chat.getId()) // 기존 ID 유지
-                        .chatInfo(chatRequestDto) // 새로운 ChatInfo로 대체
-                        .mentoringInfo(chat.getMentoringInfo()) // 필요시 기존 데이터 유지
-                        .build())
-                .orElseGet(() -> {
-                    log.info("Creating new chat list {}", mentoringSessionUuid);
-                    MentoringRequestDto mentoringRequestDto = MentoringRequestDto.from(mentoringServiceFeignClient.findSessionRoomBySessionUuid(mentoringSessionUuid));
-                    log.info("{}", mentoringRequestDto);
-                    return chatRequestDto.toEntity(chatRequestDto, mentoringRequestDto, mentoringSessionUuid); // 없으면 새로 생성
-                });
+        // 3. 저장
+        ChatList save = chatListRepository.save(updatedChatList);
 
-        // 3. 저장 (기존 ID면 업데이트, 없으면 새로 저장)
-        chatListRepository.save(chatList);
-        log.info("{} 채팅 성공: {}", existingChat.isPresent() ? "채팅 업데이트" : "채팅 저장", chatRequestDto.getMessage());
+        log.info("채팅 업데이트 성공: {}", save.getChatInfo().getMessage());
     }
 
     @Override
